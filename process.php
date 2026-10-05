@@ -1,25 +1,19 @@
 <?php
     session_start();
 
-    function clean_input($data) 
+    include 'error.inc';
+
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    if ($username == 'admin' && $password == 'password123')
         {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
+            $_SESSION['User'] = $username;
+            header('Location: welcome.php');
         }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") 
+        else
         {
-            $username = clean_input($_POST["username"]);
-            $password = clean_input($_POST["password"]);
-            $age = clean_input($_POST["age"]);
-
-            $species = clean_input($_POST["species"]);
-            $accom = isset($_POST["accom"]) ? $_POST["accom"] : [];
-
-            $food = clean_input($_POST["food"]);
-            $partysize = clean_input($_POST["partysize"]);
+            echo "Invalid login. <a href='login.php'>Try again</a>";
         }
 
 ?>
